@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Instagram Live Recorder</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 300px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      background: #0f0f0f;
+      color: #fff;
+    }
+
+    .header {
+      background: linear-gradient(135deg, #833ab4, #fd1d1d, #fcb045);
+      padding: 16px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .header-icon {
+      width: 32px;
+      height: 32px;
+    }
+
+    .header-title {
+      font-size: 14px;
+      font-weight: 700;
+      color: #fff;
+      line-height: 1.2;
+    }
+
+    .header-subtitle {
+      font-size: 11px;
+      color: rgba(255,255,255,0.8);
+    }
+
+    .content {
+      padding: 16px;
+    }
+
+    .status-card {
+      background: #1a1a1a;
+      border-radius: 10px;
+      padding: 14px;
+      margin-bottom: 14px;
+      border: 1px solid #2a2a2a;
+    }
+
+    .status-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 8px;
+    }
+
+    .status-row:last-child {
+      margin-bottom: 0;
+    }
+
+    .status-label {
+      font-size: 12px;
+      color: #888;
+    }
+
+    .status-badge {
+      font-size: 11px;
+      font-weight: 600;
+      padding: 3px 8px;
+      border-radius: 20px;
+    }
+
+    .badge-live {
+      background: rgba(255, 59, 48, 0.2);
+      color: #ff3b30;
+      border: 1px solid rgba(255, 59, 48, 0.4);
+    }
+
+    .badge-no-live {
+      background: rgba(255,255,255,0.05);
+      color: #555;
+      border: 1px solid #333;
+    }
+
+    .badge-recording {
+      background: rgba(255, 59, 48, 0.2);
+      color: #ff3b30;
+      border: 1px solid rgba(255, 59, 48, 0.4);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .badge-recording::before {
+      content: '';
+      width: 7px;
+      height: 7px;
+      background: #ff3b30;
+      border-radius: 50%;
+      animation: blink 1s infinite;
+    }
+
+    .badge-idle {
+      background: rgba(255,255,255,0.05);
+      color: #555;
+      border: 1px solid #333;
+    }
+
+    @keyframes blink {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.2; }
+    }
+
+    .duration-display {
+      font-size: 22px;
+      font-weight: 700;
+      color: #fff;
+      font-variant-numeric: tabular-nums;
+      letter-spacing: 1px;
+      text-align: center;
+      padding: 8px 0;
+      font-family: 'SF Mono', 'Courier New', monospace;
+    }
+
+    .filesize-text {
+      font-size: 11px;
+      color: #666;
+      text-align: center;
+      margin-top: -4px;
+      margin-bottom: 8px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 13px;
+      border: none;
+      border-radius: 10px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: opacity 0.15s, transform 0.1s;
+      letter-spacing: 0.3px;
+    }
+
+    .btn:active {
+      transform: scale(0.97);
+    }
+
+    .btn:disabled {
+      opacity: 0.4;
+      cursor: not-allowed;
+    }
+
+    .btn-start {
+      background: linear-gradient(135deg, #833ab4, #fd1d1d);
+      color: #fff;
+    }
+
+    .btn-stop {
+      background: #2a2a2a;
+      color: #ff3b30;
+      border: 1px solid rgba(255, 59, 48, 0.3);
+    }
+
+    .btn-stop:hover:not(:disabled) {
+      background: rgba(255, 59, 48, 0.1);
+    }
+
+    .message {
+      margin-top: 10px;
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 12px;
+      line-height: 1.5;
+    }
+
+    .message-error {
+      background: rgba(255, 59, 48, 0.1);
+      color: #ff6b6b;
+      border: 1px solid rgba(255, 59, 48, 0.2);
+    }
+
+    .message-info {
+      background: rgba(255, 255, 255, 0.05);
+      color: #888;
+      border: 1px solid #2a2a2a;
+    }
+
+    .not-instagram {
+      padding: 24px 16px;
+      text-align: center;
+    }
+
+    .not-instagram-icon {
+      font-size: 40px;
+      margin-bottom: 12px;
+    }
+
+    .not-instagram-text {
+      font-size: 13px;
+      color: #666;
+      line-height: 1.6;
+    }
+
+    .not-instagram-link {
+      display: inline-block;
+      margin-top: 12px;
+      padding: 8px 16px;
+      background: linear-gradient(135deg, #833ab4, #fd1d1d);
+      color: #fff;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+
+    .footer {
+      padding: 10px 16px;
+      border-top: 1px solid #1a1a1a;
+      font-size: 10px;
+      color: #444;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <div class="header">
+    <svg class="header-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="16" cy="16" r="14" fill="white" fill-opacity="0.15"/>
+      <circle cx="16" cy="16" r="10" stroke="white" stroke-width="1.5"/>
+      <circle cx="16" cy="16" r="6" fill="white" fill-opacity="0.9"/>
+      <circle cx="22" cy="10" r="2" fill="white"/>
+    </svg>
+    <div>
+      <div class="header-title">Instagram Live Recorder</div>
+      <div class="header-subtitle">ライブ録画・保存ツール</div>
+    </div>
+  </div>
+
+  <div id="main-content">
+    <!-- JavaScriptで動的に生成 -->
+  </div>
+
+  <div class="footer">MP4 形式で保存 (非対応環境は WebM にフォールバック)</div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

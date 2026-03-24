@@ -1,0 +1,86 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="100%" x2="100%" y2="0%">
+      <stop offset="0%"   stop-color="#f9ce34"/>
+      <stop offset="35%"  stop-color="#ee2a7b"/>
+      <stop offset="70%"  stop-color="#c13584"/>
+      <stop offset="100%" stop-color="#6228d7"/>
+    </linearGradient>
+    <linearGradient id="camGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%"   stop-color="#ffffff" stop-opacity="1"/>
+      <stop offset="100%" stop-color="#f0e8ff" stop-opacity="1"/>
+    </linearGradient>
+    <radialGradient id="lensGrad" cx="40%" cy="35%">
+      <stop offset="0%"   stop-color="#7b2fff"/>
+      <stop offset="60%"  stop-color="#2d1060"/>
+      <stop offset="100%" stop-color="#0d0030"/>
+    </radialGradient>
+  </defs>
+
+  <!-- 角丸背景 -->
+  <rect width="128" height="128" rx="26" ry="26" fill="url(#bg)"/>
+
+  <!-- 上部ふんわり光沢 -->
+  <ellipse cx="64" cy="22" rx="52" ry="18" fill="white" fill-opacity="0.10"/>
+
+  <!-- ======= カメラ本体 ======= -->
+  <!-- カメラ外枠 -->
+  <rect x="16" y="46" width="68" height="48" rx="10" ry="10" fill="url(#camGrad)"/>
+
+  <!-- ファインダー出っ張り -->
+  <rect x="30" y="39" width="26" height="12" rx="6" ry="6" fill="url(#camGrad)"/>
+
+  <!-- フラッシュ -->
+  <circle cx="66" cy="45" r="5" fill="url(#camGrad)"/>
+  <circle cx="66" cy="45" r="3" fill="#ffe066"/>
+
+  <!-- レンズ外リング (ピンク) -->
+  <circle cx="47" cy="70" r="19" fill="#ee2a7b"/>
+  <!-- レンズ中リング (紫) -->
+  <circle cx="47" cy="70" r="14" fill="#7b2fff"/>
+  <!-- 瞳 -->
+  <circle cx="47" cy="70" r="9"  fill="url(#lensGrad)"/>
+  <!-- ハイライト -->
+  <circle cx="42" cy="65" r="3.5" fill="white" fill-opacity="0.6"/>
+  <circle cx="51" cy="73" r="1.5" fill="white" fill-opacity="0.3"/>
+
+  <!-- シャッターボタン -->
+  <circle cx="76" cy="52" r="5" fill="white" fill-opacity="0.5"/>
+  <circle cx="76" cy="52" r="3" fill="white" fill-opacity="0.9"/>
+
+  <!-- ======= 録画バッジ (右下) ======= -->
+  <!-- 白い外リング -->
+  <circle cx="93" cy="88" r="19" fill="white"/>
+  <!-- 赤い塗り -->
+  <circle cx="93" cy="88" r="15" fill="#ff3b5c"/>
+  <!-- RECドット (白) -->
+  <circle cx="93" cy="88" r="8" fill="white"/>
+  <!-- RECドット内赤 -->
+  <circle cx="93" cy="88" r="5" fill="#ff3b5c"/>
+
+  <!-- ======= キラキラ装飾 ======= -->
+  <!-- 星1 (右上) -->
+  <path d="M106 14 L107.4 18.2 L112 19 L108.8 22.2 L109.7 27 L106 24.8 L102.3 27 L103.2 22.2 L100 19 L104.6 18.2 Z"
+        fill="white" fill-opacity="0.9"/>
+  <!-- 星2 (小さめ) -->
+  <path d="M118 28 L118.8 30.5 L121.5 31 L119.5 33 L120 35.5 L118 34.3 L116 35.5 L116.5 33 L114.5 31 L117.2 30.5 Z"
+        fill="white" fill-opacity="0.7"/>
+  <!-- 丸ぽち -->
+  <circle cx="112" cy="10" r="2.5" fill="white" fill-opacity="0.8"/>
+
+  <!-- ハート (左下) -->
+  <path d="M20 108 C20 108 12 102 12 97 C12 93.5 14.5 92 16.5 93.8
+           C17.8 95 20 97 20 97
+           C20 97 22.2 95 23.5 93.8
+           C25.5 92 28 93.5 28 97
+           C28 102 20 108 20 108 Z"
+        fill="white" fill-opacity="0.8"/>
+
+  <!-- ハート (右上の小さい) -->
+  <path d="M115 54 C115 54 110 50 110 47.5 C110 45.8 111.3 45 112.3 46
+           C113 46.7 115 48.5 115 48.5
+           C115 48.5 117 46.7 117.7 46
+           C118.7 45 120 45.8 120 47.5
+           C120 50 115 54 115 54 Z"
+        fill="white" fill-opacity="0.75"/>
+</svg>
