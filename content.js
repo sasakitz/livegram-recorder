@@ -8,8 +8,17 @@
   let selectedMimeType = '';
 
   /**
+   * 現在のプラットフォームを判定する
+   */
+  function getPlatformPrefix() {
+    const host = window.location.hostname;
+    if (host.includes('tiktok')) return 'tiktok-live';
+    return 'instagram-live';
+  }
+
+  /**
    * ページ上の再生中の動画要素を探す
-   * Instagram Liveは通常 <video> タグで配信される
+   * Instagram Live / TikTok Live は通常 <video> タグで配信される
    */
   function findLiveVideo() {
     const videos = Array.from(document.querySelectorAll('video'));
@@ -52,7 +61,7 @@
 
     const video = findLiveVideo();
     if (!video) {
-      return { success: false, error: 'Instagram Liveの動画が見つかりません。ライブ配信ページを開いてください。' };
+      return { success: false, error: 'ライブ配信の動画が見つかりません。ライブ配信ページを開いてください。' };
     }
 
     let stream;
@@ -142,7 +151,7 @@
       .replace(/\..+/, '');
 
     a.href = url;
-    a.download = `instagram-live_${timestamp}.${fileExt}`;
+    a.download = `${getPlatformPrefix()}_${timestamp}.${fileExt}`;
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);

@@ -5,14 +5,23 @@
   let pollInterval = null;
 
   /**
-   * 現在のアクティブタブが Instagram かどうかを確認
+   * URLからプラットフォームを判定
    */
-  async function getActiveInstagramTab() {
+  function getPlatform(url) {
+    if (url.includes('instagram.com')) return 'instagram';
+    if (url.includes('tiktok.com')) return 'tiktok';
+    return null;
+  }
+
+  /**
+   * 現在のアクティブタブがサポート対象プラットフォームかどうかを確認
+   */
+  async function getActiveSupportedTab() {
     const [tab] = await chrome.tabs.query({ active: true, currentWindow: true });
-    if (!tab || !tab.url || !tab.url.includes('instagram.com')) {
-      return null;
-    }
-    return tab;
+    if (!tab || !tab.url) return null;
+    const platform = getPlatform(tab.url);
+    if (!platform) return null;
+    return { tab, platform };
   }
 
   /**
@@ -48,18 +57,37 @@
   }
 
   /**
-   * Instagram 以外のページで表示するUI
+   * ヘッダーをプラットフォームに合わせて更新
    */
-  function renderNotInstagram() {
+  function updateHeader(platform) {
+    const header = document.getElementById('header');
+    const subtitle = document.getElementById('header-platform');
+    if (platform === 'tiktok') {
+      header.classList.add('header-tiktok');
+      if (subtitle) subtitle.textContent = 'TikTok Live';
+    } else {
+      if (subtitle) subtitle.textContent = 'Instagram Live';
+    }
+  }
+
+  /**
+   * 非対応ページで表示するUI
+   */
+  function renderNotSupported() {
     mainContent.innerHTML = `
       <div class="not-instagram">
-        <div class="not-instagram-icon">📷</div>
+        <div class="not-instagram-icon">🎥</div>
         <div class="not-instagram-text">
-          Instagram のページを開いてから<br>この拡張機能を使用してください
+          Instagram または TikTok の<br>ライブ配信ページを開いてから<br>この拡張機能を使用してください
         </div>
-        <a class="not-instagram-link" href="https://www.instagram.com" target="_blank">
-          Instagram を開く
-        </a>
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:12px">
+          <a class="not-instagram-link" href="https://www.instagram.com" target="_blank">
+            Instagram
+          </a>
+          <a class="not-instagram-link not-instagram-link-tiktok" href="https://www.tiktok.com" target="_blank">
+            TikTok
+          </a>
+        </div>
       </div>
     `;
   }
@@ -88,7 +116,7 @@
       : '';
 
     const hintHtml = !isLive && !isRecording
-      ? `<div class="message message-info">Instagram Liveの配信ページで録画ボタンを押してください</div>`
+      ? `<div class="message message-info">ライブ配信ページで録画ボタンを押してください</div>`
       : '';
 
     mainContent.innerHTML = `
@@ -128,6 +156,7 @@
   }
 
   let currentTabId = null;
+  let currentPlatform = null;
 
   async function handleStart() {
     if (!currentTabId) return;
@@ -178,13 +207,16 @@
    * 初期化
    */
   async function init() {
-    const tab = await getActiveInstagramTab();
-    if (!tab) {
-      renderNotInstagram();
+    const result = await getActiveSupportedTab();
+    if (!result) {
+      renderNotSupported();
       return;
     }
 
+    const { tab, platform } = result;
     currentTabId = tab.id;
+    currentPlatform = platform;
+    updateHeader(platform);
 
     // コンテンツスクリプトが読み込まれているか確認
     const status = await fetchStatus();

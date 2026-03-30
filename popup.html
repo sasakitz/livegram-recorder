@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Instagram Live Recorder</title>
+  <title>Live Recorder</title>
   <style>
     * {
       box-sizing: border-box;
@@ -24,6 +24,10 @@
       display: flex;
       align-items: center;
       gap: 10px;
+    }
+
+    .header-tiktok {
+      background: linear-gradient(135deg, #010101, #69c9d0, #ee1d52);
     }
 
     .header-icon {
@@ -222,6 +226,10 @@
       font-weight: 600;
     }
 
+    .not-instagram-link-tiktok {
+      background: linear-gradient(135deg, #010101, #69c9d0, #ee1d52);
+    }
+
     .footer {
       padding: 10px 16px;
       border-top: 1px solid #1a1a1a;
@@ -232,7 +240,7 @@
   </style>
 </head>
 <body>
-  <div class="header">
+  <div class="header" id="header">
     <svg class="header-icon" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
       <circle cx="16" cy="16" r="14" fill="white" fill-opacity="0.15"/>
       <circle cx="16" cy="16" r="10" stroke="white" stroke-width="1.5"/>
@@ -240,8 +248,8 @@
       <circle cx="22" cy="10" r="2" fill="white"/>
     </svg>
     <div>
-      <div class="header-title">Instagram Live Recorder</div>
-      <div class="header-subtitle">ライブ録画・保存ツール</div>
+      <div class="header-title">Live Recorder</div>
+      <div class="header-subtitle" id="header-platform">ライブ録画・保存ツール</div>
     </div>
   </div>
 
@@ -249,7 +257,7 @@
     <!-- JavaScriptで動的に生成 -->
   </div>
 
-  <div class="footer">MP4 形式で保存 (非対応環境は WebM にフォールバック)</div>
+  <div class="footer">Instagram / TikTok Live 対応 · MP4 (非対応環境は WebM)</div>
 
   <script src="popup.js"></script>
 </body>
