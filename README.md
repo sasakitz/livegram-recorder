@@ -1,13 +1,14 @@
-# Instagram Live Recorder
+# Live Recorder
 
-Instagram Liveの配信を録画・保存するChrome拡張機能です。
+Instagram・TikTok Liveの配信を録画・保存するChrome拡張機能です。
 
 ## 機能
 
-- Instagram Liveの配信をブラウザ上で録画
+- Instagram Live / TikTok Live の配信をブラウザ上で録画
 - 録画時間とファイルサイズのリアルタイム表示
 - MP4形式で保存（非対応環境はWebMにフォールバック）
 - 音声付き録画（MediaStream APIによる取得）
+- プラットフォーム自動検出（Instagram / TikTok でヘッダーカラーを切り替え）
 
 ## インストール方法
 
@@ -19,10 +20,14 @@ Instagram Liveの配信を録画・保存するChrome拡張機能です。
 
 ## 使い方
 
-1. [Instagram](https://www.instagram.com) のライブ配信ページを開く
+1. [Instagram](https://www.instagram.com) または [TikTok](https://www.tiktok.com) のライブ配信ページを開く
 2. ツールバーの拡張機能アイコンをクリック
 3. 「LIVE検出」バッジが表示されたら「録画開始」ボタンを押す
 4. 「録画を停止してダウンロード」ボタンを押すと動画ファイルが自動保存される
+
+保存されるファイル名の形式：
+- Instagram: `instagram-live_YYYY-MM-DD_HH-mm-ss.mp4`
+- TikTok: `tiktok-live_YYYY-MM-DD_HH-mm-ss.mp4`
 
 ## 動作環境
 
@@ -44,5 +49,5 @@ livegram-recorder/
 ## 注意事項
 
 - 本拡張機能は個人利用を目的としています
-- Instagramの利用規約に従ってご利用ください
+- Instagram・TikTokの利用規約に従ってご利用ください
 - 録画したコンテンツの著作権は配信者に帰属します
